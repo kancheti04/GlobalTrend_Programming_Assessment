@@ -1,48 +1,25 @@
-class MaxHeap:
-    def __init__(self):
-        self.heap = []
-
-    def insert(self, val):
-        self.heap.append(val)
-        self._heapify_up(len(self.heap) - 1)
-
-    def delete(self):
-        if len(self.heap) == 0:
-            raise IndexError("delete from an empty heap")
-        if len(self.heap) == 1:
-            return self.heap.pop()
-        max_val = self.heap[0]
-        self.heap[0] = self.heap.pop()
-        self._heapify_down(0)
-        return max_val
-
-    def get_max(self):
-        if len(self.heap) == 0:
-            raise IndexError("get from an empty heap")
-        return self.heap[0]
-
-    def _heapify_up(self, index):
-        parent_index = (index - 1) // 2
-        if index > 0 and self.heap[index] > self.heap[parent_index]:
-            self.heap[index], self.heap[parent_index] = self.heap[parent_index], self.heap[index]
-            self._heapify_up(parent_index)
-
-    def _heapify_down(self, index):
-        left_child_index = 2 * index + 1
-        right_child_index = 2 * index + 2
-        largest = index
-
-        if left_child_index < len(self.heap) and self.heap[left_child_index] > self.heap[largest]:
-            largest = left_child_index
-        if right_child_index < len(self.heap) and self.heap[right_child_index] > self.heap[largest]:
-            largest = right_child_index
-        if largest != index:
-            self.heap[index], self.heap[largest] = self.heap[largest], self.heap[index]
-            self._heapify_down(largest)
-max_heap = MaxHeap()
-max_heap.insert(10)
-max_heap.insert(20)
-max_heap.insert
-print("Max value:", max_heap.get_max())  # Output: Max value: 20
-print("Deleted max value:", max_heap.delete())  # Output: Deleted max value: 20
-print("Max value after deletion:", max_heap.get_max())  # Output: Max value after deletion: 10
+def transpose(matrix):
+    rows=len(matrix)
+    cols=len(matrix[0])
+    t=[[None]*rows for _ in range(cols)] #create a new matrix with rows&cols and initialize with None
+    for i in range(rows):
+        for j in range(cols):
+            t[j][i]=matrix[i][j]
+    return t
+def get_input():
+    rows=int(input("Enter the number of rows:"))
+    cols=int(input("Enter the number of cols:"))
+    matrix=[] #initialize an empty matrix
+    for _ in range(rows):
+        row=list(map(int,input().split()))
+        if len(row)!=cols:
+            print(f"Each row must have {cols} elements.")#Check the row has correct number of elements or not
+            return None
+        matrix.append(row)#add the row to the matrix
+    return matrix
+matrix=get_input() #call the function
+if matrix: #if the matrix is valid
+    t=transpose(matrix) #Transpose the matrix
+    print("Transposed matrix is:")
+    for row in t:
+        print(row)
